@@ -1,0 +1,15 @@
+<div class="game-container" #gameContainer>
+  <div class="game-board">
+    <div *ngFor="let row of getVisibleBoard()" class="row">
+      <div *ngFor="let cell of row" class="cell">
+        {{ cell }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="map-info">
+  Map Size: {{ gameService.mapSize.width }}x{{ gameService.mapSize.height }}
+</div>
+<div class="viewport-info">
+  Viewport: {{ viewportOffset.x }},{{ viewportOffset.y }}
+</div>
