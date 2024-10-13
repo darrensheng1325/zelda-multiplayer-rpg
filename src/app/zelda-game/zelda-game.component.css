@@ -1,11 +1,14 @@
 .game-container {
+  width: 600px;
+  height: 600px;
   overflow: hidden;
   border: 2px solid #000;
-  display: inline-block;
+  position: relative;
 }
 
 .game-board {
-  display: inline-block;
+  position: absolute;
+  transition: transform 0.3s ease;
 }
 
 .row {
@@ -13,15 +16,91 @@
 }
 
 .cell {
-  width: 30px;
-  height: 30px;
-  border: 1px solid #ccc;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+.cell.empty {
+  background-color: #90EE90; /* Light green for grass */
+}
+
+.cell.player, .cell.enemy {
+  background-color: #90EE90; /* Keep grass background */
+}
+
+.player-circle {
+  width: 30px;
+  height: 30px;
+  background-color: #4169E1; /* Royal blue for player */
+  border-radius: 50%; /* Make it circular */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+}
+
+.enemy-circle {
+  width: 30px;
+  height: 30px;
+  background-color: #FF0000; /* Red for enemy */
+  border-radius: 50%; /* Make it circular */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+}
+
+.coordinates {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 8px;
+  color: #333;
 }
 
 .map-info, .viewport-info {
   margin-top: 10px;
   font-size: 14px;
+}
+
+.game-over-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.game-over-content h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.game-over-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.game-over-content button {
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.game-over-content button:hover {
+  background-color: #45a049;
 }

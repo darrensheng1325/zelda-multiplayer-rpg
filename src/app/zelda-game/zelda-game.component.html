@@ -1,12 +1,29 @@
 <div class="game-container" #gameContainer>
-  <div class="game-board">
-    <div *ngFor="let row of getVisibleBoard()" class="row">
-      <div *ngFor="let cell of row" class="cell">
-        {{ cell }}
+  <div class="game-board" 
+       [style.width.px]="gameService.mapSize.width * cellSize" 
+       [style.height.px]="gameService.mapSize.height * cellSize"
+       [style.transform]="'translate(' + (-viewportOffset.x * cellSize) + 'px, ' + (-viewportOffset.y * cellSize) + 'px)'">
+    <div *ngFor="let row of gameBoard; let y = index" class="row">
+      <div *ngFor="let cell of row; let x = index" class="cell" 
+           [class.player]="cell === 'P'"
+           [class.enemy]="cell === 'E'"
+           [class.empty]="cell === '.'">
+        <div *ngIf="cell === 'P'" class="player-circle"></div>
+        <div *ngIf="cell === 'E'" class="enemy-circle"></div>
+        <div class="coordinates">{{getCoordinates(x, y)}}</div>
       </div>
     </div>
   </div>
+  
+  <div *ngIf="isGameOver" class="game-over-overlay">
+    <div class="game-over-content">
+      <h2>Game Over</h2>
+      <p>Your score: {{ score }}</p>
+      <button (click)="restartGame()">Restart Game</button>
+    </div>
+  </div>
 </div>
+
 <div class="map-info">
   Map Size: {{ gameService.mapSize.width }}x{{ gameService.mapSize.height }}
 </div>
