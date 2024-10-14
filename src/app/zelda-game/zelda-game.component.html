@@ -1,16 +1,13 @@
-<div class="game-container" #gameContainer>
-  <div class="game-board" 
-       [style.width.px]="gameService.mapSize.width * cellSize" 
-       [style.height.px]="gameService.mapSize.height * cellSize"
-       [style.transform]="'translate(' + (-viewportOffset.x * cellSize) + 'px, ' + (-viewportOffset.y * cellSize) + 'px)'">
-    <div *ngFor="let row of gameBoard; let y = index" class="row">
-      <div *ngFor="let cell of row; let x = index" class="cell" 
-           [class.player]="cell === 'P'"
-           [class.enemy]="cell === 'E'"
-           [class.empty]="cell === '.'">
+<div #gameContainer class="game-container">
+  <div class="game-board" [style.transform]="'translate(' + (-viewportOffset.x * cellSize) + 'px, ' + (-viewportOffset.y * cellSize) + 'px)'">
+    <div *ngFor="let row of gameBoard; let rowIndex = index" class="row">
+      <div *ngFor="let cell of row; let colIndex = index" class="cell" 
+           [ngClass]="{'player': cell === 'P', 'enemy': cell === 'E', 'rock': cell === 'R', 'tree': cell === 'T'}">
         <div *ngIf="cell === 'P'" class="player-circle"></div>
         <div *ngIf="cell === 'E'" class="enemy-circle"></div>
-        <div class="coordinates">{{getCoordinates(x, y)}}</div>
+        <div *ngIf="cell === 'R'" class="rock"></div>
+        <div *ngIf="cell === 'T'" class="tree"></div>
+        <span class="coordinates">{{getCoordinates(colIndex + viewportOffset.x, rowIndex + viewportOffset.y)}}</span>
       </div>
     </div>
   </div>

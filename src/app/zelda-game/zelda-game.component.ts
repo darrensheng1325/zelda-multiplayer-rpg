@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { GameService } from '../game.service';
 import { CommonModule } from '@angular/common';
 import { interval, Subscription } from 'rxjs';
+import { Obstacle } from '../models/obstacle.model';
 
 @Component({
   selector: 'app-zelda-game',
@@ -20,6 +21,7 @@ export class ZeldaGameComponent implements OnInit, AfterViewInit {
   private updateSubscription: Subscription | null = null;
   isGameOver = false;
   score = 0;
+  obstacles: Obstacle[] = [];
 
   constructor(
     public gameService: GameService,
@@ -81,6 +83,17 @@ export class ZeldaGameComponent implements OnInit, AfterViewInit {
       for (let j = 0; j < this.gameService.mapSize.width; j++) {
         this.gameBoard[i][j] = '.';
       }
+    }
+
+    // Update obstacle positions
+    if (state.obstacles) {
+      this.obstacles = state.obstacles;
+      this.obstacles.forEach(obstacle => {
+        if (obstacle.x >= 0 && obstacle.x < this.gameService.mapSize.width && 
+            obstacle.y >= 0 && obstacle.y < this.gameService.mapSize.height) {
+          this.gameBoard[obstacle.y][obstacle.x] = obstacle.type === 'rock' ? 'R' : 'T';
+        }
+      });
     }
 
     // Update player positions

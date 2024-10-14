@@ -18,35 +18,63 @@
 .cell {
   width: 40px;
   height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #ccc;
   position: relative;
-}
-
-.cell.empty {
   background-color: #90EE90; /* Light green for grass */
+  box-sizing: border-box;
 }
 
-.cell.player, .cell.enemy {
-  background-color: #90EE90; /* Keep grass background */
+.player-circle, .enemy-circle, .rock, .tree {
+  width: 30px;
+  height: 30px;
+  position: absolute;
 }
 
 .player-circle {
-  width: 30px;
-  height: 30px;
   background-color: #4169E1; /* Royal blue for player */
   border-radius: 50%; /* Make it circular */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
 }
 
 .enemy-circle {
-  width: 30px;
-  height: 30px;
   background-color: #FF0000; /* Red for enemy */
   border-radius: 50%; /* Make it circular */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+}
+
+.rock {
+  background-color: #808080; /* Gray for rocks */
+  border-radius: 5px;
+}
+
+.tree {
+  position: relative;
+}
+
+.tree::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #228B22; /* Forest green for tree top */
+  border-radius: 50%;
+  top: 0;
+  left: 5px;
+}
+
+.tree::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  background-color: #8B4513; /* Brown for tree trunk */
+  bottom: 0;
+  left: 12px;
 }
 
 .coordinates {

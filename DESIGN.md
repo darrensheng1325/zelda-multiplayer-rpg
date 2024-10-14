@@ -1,7 +1,7 @@
 # Zelda Multiplayer RPG - Application Design Document
 
 ## Overview
-Zelda Multiplayer RPG is a real-time multiplayer game inspired by the Legend of Zelda series. Players navigate a 2D grid-based world, avoiding enemies and competing for survival. The game features a client-server architecture, allowing multiple players to interact in the same game world simultaneously.
+Zelda Multiplayer RPG is a real-time multiplayer game inspired by the Legend of Zelda series. Players navigate a 2D grid-based world, avoiding enemies and competing for survival. The game features a client-server architecture, allowing multiple players to interact in the same game world simultaneously. The world includes obstacles such as clustered rocks and scattered trees, creating a more natural and challenging environment.
 
 ## Architecture
 The application follows a client-server architecture:
@@ -20,12 +20,14 @@ The application follows a client-server architecture:
 1. AppComponent: The root component of the application.
 2. ZeldaGameComponent: The main game component that renders the game board and handles user input.
 3. GameService: Manages game state and communication with the server.
-4. Server: Node.js server that manages the game state and broadcasts updates to connected clients.
+4. Server: Node.js server that manages the game state, generates a permanent map of obstacles, and broadcasts updates to connected clients.
 
 ## Data Model
-- GameState: { players: Object, enemies: Object, gameOver: boolean, score: number }
+- GameState: { players: Object, enemies: Object, obstacles: Object, gameOver: boolean, score: number }
 - Player: { x: number, y: number, symbol: string }
 - Enemy: { x: number, y: number, symbol: string }
+- Obstacle: { x: number, y: number, type: 'rock' | 'tree' }
+- Map: A permanent layout of obstacles generated at server start, featuring clustered rocks and scattered trees
 
 ## API Design
 The application primarily uses WebSocket communication for real-time updates. Key socket events include:
@@ -39,10 +41,10 @@ The application primarily uses WebSocket communication for real-time updates. Ke
 
 ## User Interface
 Main screen:
-1. Game Board: Displays a grid-based game world with players and enemies.
+1. Game Board: Displays a grid-based game world with players, enemies, rocks, and tree-like flowers.
 2. Game Over Overlay: Shows when a player collides with an enemy, displaying the score and a restart button.
 
-The UI is responsive and adapts to different screen sizes, with the game board centered in the viewport.
+The UI is responsive and adapts to different screen sizes, with the game board centered in the viewport. Rocks are displayed as gray squares, while trees are represented as green flower-like shapes with small trunks, creating a more visually appealing and nature-inspired obstacle.
 
 ## Security Considerations
 - Input validation: Ensure all player movements are validated on the server-side to prevent cheating.
@@ -53,6 +55,7 @@ The UI is responsive and adapts to different screen sizes, with the game board c
 - Efficient rendering: The game uses a viewport system to render only the visible portion of the game world.
 - Debouncing: Implement debouncing for player movement to reduce unnecessary network traffic.
 - Server optimization: Use efficient data structures and algorithms for game state management and collision detection.
+- Obstacle generation: The server generates clustered rocks and scattered trees at startup, creating a more complex and interesting game world without impacting runtime performance.
 
 ## Deployment
 - Frontend Hosting: Can be deployed on any static file hosting service (e.g., Netlify, Vercel)
@@ -66,6 +69,9 @@ The UI is responsive and adapts to different screen sizes, with the game board c
 3. Power-ups and items: Add collectible items that provide temporary benefits to players.
 4. Improved graphics: Enhance the visual appeal with sprite-based graphics instead of simple shapes.
 5. Mobile support: Optimize the game for touch controls on mobile devices.
+6. Destructible environment: Allow players to interact with obstacles, such as cutting down trees or breaking rocks with special items.
+7. Dynamic map generation: Implement algorithms to generate more complex and varied maps with different layouts of obstacles.
+8. Advanced terrain generation: Implement more sophisticated algorithms for generating varied and realistic terrain, including different types of obstacle clusters and natural formations.
 
 ## Conclusion
 The Zelda Multiplayer RPG demonstrates a basic implementation of a real-time multiplayer game using modern web technologies. The modular architecture allows for easy expansion and addition of new features. Future development should focus on enhancing gameplay elements, improving performance for larger numbers of concurrent players, and implementing user authentication for a more personalized experience.
